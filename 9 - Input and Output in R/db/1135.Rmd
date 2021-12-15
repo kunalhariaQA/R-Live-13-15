@@ -1,0 +1,124 @@
+---
+title: "Databases on 15th Dec"
+author: "KH"
+date: "15 Dec 2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+* what is a database interface?
+
+    * communication between R and RDMS
+
+```{r}
+# install.packages("DBI")
+# install.packages("RSQLite")
+library("DBI")
+library("RSQLite")
+```
+
+```{r}
+mtcars
+```
+
+
+
+# create a connection - to a DBMS
+
+```{r}
+con <-
+dbConnect(RSQLite::SQLite(),   # database driver
+          dbname = ":memory:") # could be: "example.db"
+```
+
+```{r}
+dbListTables(con)
+```
+
+```{r}
+dbWriteTable(con, "mtcars", mtcars)
+```
+
+```{r}
+dbListTables(con)
+```
+
+
+
+```{r}
+dbListFields(con, "mtcars")
+```
+
+
+# i would like to run some SQL code
+
+* This is some SQL code that I could like to run
+
+    * `SELECT * FROM mtcars WHERE cyl = 4`
+    
+```{r}
+res <- 
+  dbSendQuery(con, 
+              "SELECT * FROM mtcars WHERE cyl = 4")
+
+dbFetch(res)
+```
+
+```{r}
+dbClearResult(res)
+dbDisconnect(con)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
